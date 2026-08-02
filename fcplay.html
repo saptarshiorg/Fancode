@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="referrer" content="no-referrer">
     <link rel="icon" href="https://fancode.com/favicon.ico" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         *, *::before, *::after {
@@ -16,50 +15,59 @@
             -webkit-tap-highlight-color: transparent;
             -webkit-user-select: none; user-select: none;
         }
-        :root { --nf: #E50914; --nfdk: #b0060f; }
+        :root { --nf: #ff6a00; --nfdk: #c94f00; --fc-orange-light: #ff8a33; }
         html, body {
             width: 100%; height: 100svh; overflow: hidden;
-            background: #000; font-family: 'Inter', sans-serif;
+            background: #04070d; font-family: 'Satoshi', sans-serif;
             color: #fff; display: flex; flex-direction: column;
         }
 
         .hdr {
             flex-shrink: 0; padding: 10px 14px;
-            background: rgba(3,3,8,0.97); backdrop-filter: blur(28px);
-            border-bottom: 1px solid rgba(229,9,20,0.16);
+            background: #04070d;
+            border-bottom: 2px solid var(--nf);
         }
         .hdr-top {
             display: flex; align-items: center;
             justify-content: space-between; margin-bottom: 8px;
         }
+        .hdr-left { display: flex; align-items: center; gap: 10px; }
+        .ply-logos { display: flex; align-items: center; gap: 8px; }
+        .ply-logos img { height: 16px; width: auto; display: block; transition: transform .3s ease; }
+        .ply-logos a:hover img { transform: scale(1.12); }
         .back-a {
             display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.8); padding: 6px 13px; border-radius: 6px;
+            background: rgba(255,255,255,0.06); border: 1px solid var(--nf);
+            color: rgba(255,255,255,0.85); padding: 6px 13px; border-radius: 20px;
             font-size: 0.78rem; font-weight: 600; text-decoration: none;
-            transition: background 0.2s, border-color 0.2s;
+            transition: background 0.2s, transform 0.2s;
         }
-        .back-a:hover { background: rgba(229,9,20,0.14); border-color: rgba(229,9,20,0.35); color: #fff; }
+        .back-a:hover { background: rgba(255,106,0,0.16); color: #fff; transform: translateY(-1px); }
         .hdr-right { display: flex; align-items: center; gap: 8px; }
         .share-b {
             display: inline-flex; align-items: center; gap: 6px;
-            background: linear-gradient(135deg, #f59e0b, #eab308); color: #000;
+            background: var(--nf); color: #fff;
             font-size: 0.78rem; font-weight: 700; padding: 6px 14px;
-            border-radius: 6px; border: none; cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 3px 10px rgba(234,179,8,0.3);
+            border-radius: 20px; border: none; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+            box-shadow: 0 3px 10px rgba(255,106,0,0.3);
         }
-        .share-b:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(234,179,8,0.5); }
+        .share-b:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 5px 16px rgba(255,106,0,0.5); }
         .live-pill {
             display: inline-flex; align-items: center; gap: 5px;
             background: var(--nf); color: #fff; font-size: 0.65rem;
             font-weight: 800; padding: 2.5px 8px; border-radius: 3px;
             text-transform: uppercase; letter-spacing: 0.06em;
+            animation: livePulse 1.8s ease-in-out infinite;
+        }
+        @keyframes livePulse{
+            0%,100%{ box-shadow:0 0 0 0 rgba(255,106,0,.55); }
+            50%{ box-shadow:0 0 9px 3px rgba(255,106,0,.5); }
         }
         .pre-pill {
             display: inline-flex; align-items: center; gap: 5px;
-            background: rgba(229,9,20,0.13); border: 1px solid rgba(229,9,20,0.35);
-            color: #ff9090; font-size: 0.65rem; font-weight: 800;
+            background: rgba(255,106,0,0.13); border: 1px solid rgba(255,106,0,0.35);
+            color: var(--fc-orange-light); font-size: 0.65rem; font-weight: 800;
             padding: 2px 8px; border-radius: 3px;
             text-transform: uppercase; letter-spacing: 0.06em;
         }
@@ -101,12 +109,12 @@
         .jw-skin-netflix.jw-flag-user-inactive .jw-controlbar { opacity: 0 !important; pointer-events: none !important; }
         .jw-skin-netflix.jw-state-paused .jw-controlbar { opacity: 1 !important; pointer-events: auto !important; }
 
-        .jw-skin-netflix .jw-slider-time .jw-progress { background-color: #E50914 !important; }
+        .jw-skin-netflix .jw-slider-time .jw-progress { background-color: #ff6a00 !important; }
         .jw-skin-netflix .jw-slider-time .jw-buffer { background-color: rgba(255,255,255,0.38) !important; }
         .jw-skin-netflix .jw-slider-time .jw-rail { background-color: rgba(255,255,255,0.22) !important; height: 4px !important; border-radius: 2px !important; }
         .jw-skin-netflix .jw-slider-time:hover .jw-rail { height: 6px !important; }
         .jw-skin-netflix .jw-slider-time .jw-knob {
-            background-color: #E50914 !important; border-color: #E50914 !important;
+            background-color: #ff6a00 !important; border-color: #ff6a00 !important;
             width: 14px !important; height: 14px !important; border-radius: 50% !important;
             margin-top: -5px !important;
         }
@@ -123,7 +131,7 @@
         .jw-skin-netflix .jw-text-duration,
         .jw-skin-netflix .jw-text-countdown {
             color: rgba(255,255,255,0.86) !important;
-            font-family: 'Inter', sans-serif !important;
+            font-family: 'Satoshi', sans-serif !important;
             font-weight: 600 !important; font-size: 0.78rem !important;
         }
         .jw-skin-netflix .jw-time-tip {
@@ -145,16 +153,16 @@
         .jw-skin-netflix .jw-settings-menu {
             background: rgba(6,6,6,0.97) !important;
             border: 1px solid rgba(255,255,255,0.12) !important;
-            border-radius: 5px !important; font-family: 'Inter', sans-serif !important;
+            border-radius: 5px !important; font-family: 'Satoshi', sans-serif !important;
         }
         .jw-skin-netflix .jw-settings-content-item { color: rgba(255,255,255,0.76) !important; font-size: 0.8rem !important; }
-        .jw-skin-netflix .jw-settings-content-item:hover { background: rgba(229,9,20,0.18) !important; color: #fff !important; }
-        .jw-skin-netflix .jw-settings-content-item-active { color: #E50914 !important; font-weight: 700 !important; }
+        .jw-skin-netflix .jw-settings-content-item:hover { background: rgba(255,106,0,0.18) !important; color: #fff !important; }
+        .jw-skin-netflix .jw-settings-content-item-active { color: #ff6a00 !important; font-weight: 700 !important; }
 
         .jw-skin-netflix.jw-flag-live .jw-slider-time { display: none !important; }
         .jw-skin-netflix.jw-flag-live .jw-text-countdown { display: none !important; }
         .jw-skin-netflix .jw-flag-live-badge {
-            background: #E50914 !important; border-radius: 3px !important;
+            background: #ff6a00 !important; border-radius: 3px !important;
             color: white !important; font-weight: 800 !important;
             font-size: 0.65rem !important; padding: 2px 7px !important;
             text-transform: uppercase !important; letter-spacing: 0.05em !important;
@@ -170,7 +178,7 @@
         .ls.gone { opacity: 0; pointer-events: none; }
         .nf-ring {
             width: 46px; height: 46px;
-            border: 3px solid rgba(229,9,20,0.18);
+            border: 3px solid rgba(255,106,0,0.18);
             border-top-color: var(--nf); border-radius: 50%;
             animation: nfr 0.75s linear infinite;
         }
@@ -184,13 +192,13 @@
         }
         .ps-card {
             background: linear-gradient(145deg, #111, #1a0808);
-            border: 1px solid rgba(229,9,20,0.26); border-radius: 14px;
+            border: 1px solid rgba(255,106,0,0.26); border-radius: 14px;
             padding: 24px 20px; max-width: 305px; width: 92%; text-align: center;
-            box-shadow: 0 0 50px rgba(229,9,20,0.12);
+            box-shadow: 0 0 50px rgba(255,106,0,0.12);
         }
         .ps-badge {
             display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(229,9,20,0.13); border: 1px solid rgba(229,9,20,0.36);
+            background: rgba(255,106,0,0.13); border: 1px solid rgba(255,106,0,0.36);
             color: #ff9090; font-size: 0.67rem; font-weight: 800;
             padding: 3px 10px; border-radius: 20px;
             text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px;
@@ -202,16 +210,16 @@
             width: 100%; padding: 11px 14px; border-radius: 8px; font-size: 0.85rem;
             font-weight: 700; cursor: pointer; border: none;
             transition: transform 0.2s, box-shadow 0.2s; margin-top: 9px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Satoshi', sans-serif;
         }
-        .src-fc { background: linear-gradient(135deg, var(--nf), var(--nfdk)); color: #fff; box-shadow: 0 4px 14px rgba(229,9,20,0.36); }
-        .src-fc:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(229,9,20,0.52); }
+        .src-fc { background: linear-gradient(135deg, var(--nf), var(--nfdk)); color: #fff; box-shadow: 0 4px 14px rgba(255,106,0,0.36); }
+        .src-fc:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,106,0,0.52); }
         .src-dai { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.16) !important; }
         .src-dai:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
 
         .ftr {
-            flex-shrink: 0; background: rgba(3,3,8,0.97); backdrop-filter: blur(28px);
-            border-top: 1px solid rgba(255,255,255,0.06); padding: 9px 14px; text-align: center;
+            flex-shrink: 0; background: #04070d;
+            border-top: 2px solid var(--nf); padding: 9px 14px; text-align: center;
         }
         .tg-b {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -248,7 +256,7 @@
             border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.58);
             font-weight: 600; padding: 12px; border-radius: 8px;
             cursor: pointer; font-size: 0.88rem; transition: background 0.2s;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Satoshi', sans-serif;
         }
         .pop-cl:hover { background: rgba(255,255,255,0.1); }
         .err-p {
@@ -256,13 +264,22 @@
             align-items: center; justify-content: center; padding: 2rem; text-align: center;
         }
         body.theater .hdr, body.theater .ftr { display: none; }
+        @media (max-width: 360px){
+            .ply-logos { display: none; }
+        }
     </style>
 </head>
 <body>
 
     <header class="hdr" id="hdr">
         <div class="hdr-top">
-            <a href="fancode.html" class="back-a"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="hdr-left">
+                <a href="fancode.html" class="back-a"><i class="fas fa-arrow-left"></i> Back</a>
+                <span class="ply-logos">
+                    <a href="https://www.fancode.com" target="_blank" rel="noopener"><img src="https://www.fancode.com/skillup-uploads/fc-web-logo/fc_logo_white_bg.svg" alt="FanCode"></a>
+                    <a href="https://saptarshiorg.github.io" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/saptarshiorg/saptarshiorg.github.io/refs/heads/main/magenta.png" alt="Saptarshi"></a>
+                </span>
+            </div>
             <div class="hdr-right">
                 <div id="status-slot"></div>
                 <button class="share-b" id="share-b"><i class="fas fa-share-alt"></i> Share</button>
@@ -440,9 +457,9 @@
         function showErr(msg) {
             document.body.innerHTML = '<div class="err-p">'
                 + '<div style="font-size:2.5rem;margin-bottom:14px;">⚠️</div>'
-                + '<h2 style="font-size:1.25rem;font-weight:800;color:#E50914;margin-bottom:8px;">Stream Error</h2>'
+                + '<h2 style="font-size:1.25rem;font-weight:800;color:#ff6a00;margin-bottom:8px;">Stream Error</h2>'
                 + '<p style="color:rgba(255,255,255,0.46);font-size:0.85rem;max-width:270px;line-height:1.6;">' + msg + '</p>'
-                + '<a href="fancode.html" style="margin-top:22px;background:#E50914;color:#fff;padding:10px 24px;border-radius:7px;font-weight:700;font-size:0.88rem;text-decoration:none;">← Go Back</a>'
+                + '<a href="fancode.html" style="margin-top:22px;background:#ff6a00;color:#fff;padding:10px 24px;border-radius:7px;font-weight:700;font-size:0.88rem;text-decoration:none;">← Go Back</a>'
                 + '</div>';
         }
 
