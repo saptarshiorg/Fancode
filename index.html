@@ -5,25 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FanCode Live — Match Board</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Acme&family=Amaranth:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
 
 <style>
 
 :root{
-  --bg:#02060c;
-  --card:#0d1117;
-  --card-2:#141b24;
-  --border:#1f2733;
-  --muted:#8b949e;
-  --text:#f0f6fc;
+  --bg:#04070d;
+  --card:#12161e;
+  --card-2:#1b202a;
+  --border:#232833;
+  --muted:#9099a8;
+  --text:#ffffff;
   --gold:#ffd700;
-  --accent-live:#198754;
-  --accent-live-shadow:rgba(25,135,84,0.4);
-  --accent-upcoming:#dc3545;
-  --accent-upcoming-dark:#a31a25;
-  --accent-upcoming-shadow:rgba(220,53,69,0.4);
+  --fc-orange:#ff6a00;
+  --fc-orange-light:#ff8a33;
+  --fc-orange-shadow:rgba(255,106,0,0.25);
+  --accent-live:#e0263f;
+  --accent-live-shadow:rgba(224,38,63,0.25);
+  --accent-upcoming:#ff6a00;
+  --accent-upcoming-dark:#c94f00;
+  --accent-upcoming-shadow:rgba(255,106,0,0.25);
 }
 
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -31,7 +33,7 @@ html,body{ margin:0; padding:0; }
 body{
   background:var(--bg);
   color:var(--text);
-  font-family:'Momo Trust Display', 'Segoe UI', Arial, sans-serif;
+  font-family:'Satoshi', 'Segoe UI', Arial, sans-serif;
   -webkit-font-smoothing:antialiased;
 }
 *{ user-select:none; }
@@ -45,41 +47,20 @@ header{
   position:sticky; top:0; z-index:40;
   display:flex; align-items:center; justify-content:space-between;
   gap:16px; flex-wrap:wrap;
-  padding:16px 4px;
-  background:rgba(2,6,12,0.88);
-  -webkit-backdrop-filter:blur(10px);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--border);
+  padding:18px 4px;
+  background:var(--bg);
+  border-bottom:2px solid var(--fc-orange);
   margin-bottom:26px;
 }
-.brand{ display:flex; flex-direction:column; gap:4px; }
-.title{
-  font-size:23px;
-  font-weight:900;
-  color:#ff4b4b;
-  letter-spacing:1px;
-  line-height:1;
-}
+.brand{ display:flex; align-items:center; gap:12px; }
+.logo-badge{ display:flex; align-items:center; gap:12px; flex:none; }
+.logo-badge img{ height:30px; width:auto; display:block; }
+.logo-divider{ width:1px; height:24px; background:var(--fc-orange); flex:none; }
 .last-update{
   font-size:11.5px;
   color:var(--muted);
   letter-spacing:.4px;
 }
-.join-btn{
-  appearance:none; border:none; cursor:pointer;
-  display:flex; align-items:center; gap:8px;
-  background:#0d6efd;
-  color:#fff;
-  font-weight:700;
-  font-size:13px;
-  letter-spacing:.5px;
-  padding:11px 18px;
-  border-radius:10px;
-  box-shadow:0 4px 15px rgba(13,110,253,.35);
-  transition:filter .2s ease, transform .15s ease;
-}
-.join-btn:hover{ filter:brightness(1.1); }
-.join-btn:active{ transform:scale(.96); }
 
 .controls{
   display:flex; justify-content:flex-end;
@@ -96,17 +77,17 @@ header{
 .search-wrap input{
   width:100%;
   background:var(--card);
-  border:1px solid var(--border);
+  border:1px solid var(--fc-orange);
   color:var(--text);
   font-size:13px;
   letter-spacing:.3px;
   padding:11px 14px 11px 38px;
   border-radius:10px;
   outline:none;
-  transition:border-color .2s ease;
+  transition:box-shadow .2s ease;
 }
 .search-wrap input::placeholder{ color:var(--muted); }
-.search-wrap input:focus{ border-color:rgba(120,180,255,.55); }
+.search-wrap input:focus{ box-shadow:0 0 0 2px var(--fc-orange-light); }
 
 .grid{
   display:grid;
@@ -121,43 +102,48 @@ header{
   color:var(--muted);
   font-size:13.5px;
   letter-spacing:.5px;
-  border:1px dashed var(--border);
+  background:var(--card);
+  border:1px solid var(--fc-orange);
   border-radius:14px;
 }
 
 .card{
   background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
+  border:1px solid var(--fc-orange);
+  border-radius:16px;
   overflow:hidden;
-  box-shadow:0 10px 26px -14px rgba(0,0,0,.7);
-  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  box-shadow:0 4px 14px rgba(0,0,0,.4);
+  transition:transform .2s ease, box-shadow .2s ease;
   display:flex; flex-direction:column;
 }
 .card:hover{
-  transform:translateY(-3px);
-  border-color:rgba(120,180,255,.32);
-  box-shadow:0 18px 34px -16px rgba(0,0,0,.8);
+  transform:translateY(-4px);
+  box-shadow:0 0 0 2px var(--fc-orange-light), 0 4px 14px rgba(0,0,0,.4);
 }
 
 .thumb-wrap{
   position:relative;
   width:100%;
-  height:180px;
+  height:170px;
   background:#000;
-  display:flex; align-items:center; justify-content:center;
   overflow:hidden;
 }
 .thumb-wrap img{
   width:100%; height:100%;
-  object-fit:contain;
+  object-fit:cover;
   display:block;
 }
+.thumb-wrap::after{
+  content:'';
+  position:absolute; left:0; right:0; bottom:0; height:60%;
+  background:linear-gradient(to top, rgba(0,0,0,.55), transparent);
+  pointer-events:none;
+}
 .lang-badge{
-  position:absolute; top:10px; left:10px;
+  position:absolute; top:10px; left:10px; z-index:2;
   display:flex; align-items:center; gap:5px;
-  background:rgba(0,0,0,.72);
-  border:1px solid var(--gold);
+  background:rgba(0,0,0,.75);
+  border:1px solid var(--fc-orange);
   color:var(--gold);
   font-size:10.5px;
   font-weight:700;
@@ -168,38 +154,35 @@ header{
 .lang-badge svg{ flex:none; }
 
 .meta{
-  padding:16px 18px 18px;
-  display:flex; flex-direction:column; gap:9px;
+  padding:14px 16px 16px;
+  display:flex; flex-direction:column; gap:6px;
   flex:1;
-  text-align:center;
+  text-align:left;
 }
 .teams{
-  font-size:17px;
+  font-size:16px;
   font-weight:800;
-  letter-spacing:.3px;
-  text-transform:uppercase;
-  line-height:1.28;
+  letter-spacing:.2px;
+  line-height:1.3;
 }
 .event{
-  font-size:13px;
+  font-size:12.5px;
   color:var(--muted);
   letter-spacing:.2px;
 }
 
 .status-badge{
-  position:absolute; top:10px; right:10px;
+  position:absolute; top:10px; right:10px; z-index:2;
   display:flex; align-items:center; gap:5px;
-  background:rgba(0,0,0,.55);
   font-size:9.5px;
-  font-weight:700;
+  font-weight:800;
   letter-spacing:.6px;
-  padding:4px 9px;
+  padding:4px 10px;
   border-radius:20px;
-  opacity:.9;
 }
-.status-badge.live{ color:#7fd9a0; border:1px solid rgba(25,135,84,.4); }
-.status-badge.upcoming{ color:#e8a0a5; border:1px solid rgba(163,26,37,.4); }
-.status-badge.completed{ color:#c8ccd1; border:1px solid rgba(248,249,250,.2); }
+.status-badge.live{ background:var(--accent-live); color:#fff; }
+.status-badge.upcoming{ background:var(--fc-orange); color:#fff; }
+.status-badge.completed{ background:#3a3f4a; color:#e2e5ea; }
 .status-dot-mini{ width:5px; height:5px; border-radius:50%; background:currentColor; flex:none; }
 .status-badge.live .status-dot-mini{ animation:miniPulse 1.8s infinite; }
 @keyframes miniPulse{
@@ -222,40 +205,39 @@ header{
   font-size:13.5px;
   letter-spacing:.6px;
   padding:12px 14px;
-  border-radius:10px;
+  border-radius:24px;
   display:flex; align-items:center; justify-content:center; gap:8px;
   transition:filter .2s ease, transform .15s ease;
 }
 .btn:active{ transform:scale(.97); }
 .btn-watch-now{
-  background:var(--accent-live);
+  background:var(--fc-orange);
   color:#fff;
-  box-shadow:0 4px 15px var(--accent-live-shadow);
 }
-.btn-watch-now:hover{ filter:brightness(1.1); }
+.btn-watch-now:hover{ filter:brightness(1.08); }
 .btn-watch-now.is-disabled{
-  background:#2a2f38; color:var(--muted); box-shadow:none; cursor:not-allowed;
+  background:#2a2f38; color:var(--muted); cursor:not-allowed;
 }
 .btn-upcoming{
-  background:var(--accent-upcoming);
-  color:#fff;
-  box-shadow:0 4px 15px var(--accent-upcoming-shadow);
+  background:var(--card-2);
+  color:var(--text);
+  border:1px solid var(--fc-orange);
 }
-.btn-upcoming:hover{ filter:brightness(1.1); }
+.btn-upcoming:hover{ filter:brightness(1.15); }
 .btn-completed{
-  background:#f8f9fa;
-  color:#000;
-  box-shadow:0 4px 15px rgba(248,249,250,.2);
+  background:var(--card-2);
+  color:var(--muted);
+  border:1px solid var(--border);
 }
 
 .btn-ww{
-  background:rgba(120,180,255,.06);
-  color:#9cc7ff;
-  border:1px solid rgba(120,180,255,.3);
+  background:var(--card-2);
+  color:var(--fc-orange-light);
+  border:1px solid var(--fc-orange);
 }
-.btn-ww:hover{ background:rgba(120,180,255,.13); }
+.btn-ww:hover{ filter:brightness(1.2); }
 .btn-ww .chev{ margin-left:auto; transition:transform .3s ease; }
-.btn-ww.open{ background:rgba(120,180,255,.13); }
+.btn-ww.open{ filter:brightness(1.2); }
 .btn-ww.open .chev{ transform:rotate(180deg); }
 
 .ww-panel-wrap{
@@ -270,25 +252,24 @@ header{
   display:flex; align-items:center; gap:10px;
   padding:10px 12px;
   background:var(--card-2);
-  border:1px solid var(--border);
+  border:1px solid var(--fc-orange);
   border-radius:9px;
   cursor:pointer;
-  transition:background .2s ease, border-color .2s ease, transform .15s ease;
+  transition:filter .2s ease, transform .15s ease;
 }
 .ww-row:hover{
-  background:rgba(120,180,255,.08);
-  border-color:rgba(120,180,255,.32);
+  filter:brightness(1.25);
   transform:translateX(2px);
 }
 .ww-flag{ font-size:16px; line-height:1; flex:none; }
 .ww-name{ font-size:12px; font-weight:700; flex:1; text-align:left; letter-spacing:.2px; }
 .ww-code{ font-size:10px; font-weight:700; letter-spacing:.5px; color:var(--muted); }
-.ww-row:hover .ww-code{ color:#9cc7ff; }
+.ww-row:hover .ww-code{ color:var(--fc-orange-light); }
 
 footer{
   margin-top:50px;
   padding-top:26px;
-  border-top:1px solid var(--border);
+  border-top:2px solid var(--fc-orange);
   display:flex; flex-direction:column; align-items:center; gap:10px;
   text-align:center;
 }
@@ -302,7 +283,7 @@ footer .note{
   display:flex; align-items:center; gap:12px;
   padding:9px 18px;
   background:var(--card);
-  border:1px solid var(--border);
+  border:1px solid var(--fc-orange);
   border-radius:10px;
 }
 .vc-item{ display:flex; flex-direction:column; align-items:center; gap:2px; }
@@ -312,92 +293,10 @@ footer .note{
   font-family:'Segoe UI', Arial, sans-serif;
 }
 .vc-label{ font-size:8.5px; letter-spacing:.8px; color:var(--muted); text-transform:uppercase; }
-.vc-sep{ width:1px; height:22px; background:var(--border); }
-
-.popup-overlay{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.86);
-  -webkit-backdrop-filter:blur(14px);
-  backdrop-filter:blur(14px);
-  display:flex; align-items:center; justify-content:center;
-  padding:20px;
-  z-index:99999;
-}
-.popup-overlay.hidden{ display:none; }
-.popup-wrap{
-  position:relative;
-  width:100%; max-width:358px;
-  padding:2px;
-  background:linear-gradient(145deg, rgba(255,204,0,.8) 0%, rgba(255,224,80,.4) 50%, rgba(255,204,0,.8) 100%);
-  border-radius:18px;
-  box-shadow:0 0 50px rgba(255,204,0,.14), 0 30px 70px rgba(0,0,0,.72);
-  animation:popIn .42s cubic-bezier(.175,.885,.32,1.275) both;
-}
-@keyframes popIn{
-  from{ opacity:0; transform:scale(.87) translateY(24px); }
-  to{ opacity:1; transform:scale(1) translateY(0); }
-}
-.popup-box{
-  background:linear-gradient(168deg, #1e1e26 0%, #0e0e13 100%);
-  border-radius:16px;
-  padding:34px 24px 26px;
-  text-align:center;
-}
-.popup-title{
-  color:#ffcc00;
-  font-family:'Acme', sans-serif;
-  font-size:30px;
-  letter-spacing:.5px;
-  margin-bottom:12px;
-}
-.popup-text{
-  color:#a0a0a8;
-  font-size:14px;
-  line-height:1.65;
-  margin-bottom:24px;
-  font-family:'Segoe UI', Arial, sans-serif;
-}
-.popup-text b{
-  color:#fff;
-  font-family:'Amaranth', sans-serif;
-  font-size:17px;
-  display:block;
-  margin-top:7px;
-}
-.btn-popup{
-  width:100%; padding:14px; border:none;
-  border-radius:13px;
-  font-family:'Amaranth', sans-serif;
-  cursor:pointer;
-  transition:transform .18s, box-shadow .18s;
-  appearance:none;
-  touch-action:manipulation;
-  text-decoration:none;
-  display:block;
-}
-.btn-popup:active{ transform:scale(.95); }
-.btn-join-main{
-  background:linear-gradient(90deg, #1bcc26, #17b823);
-  color:#fff;
-  font-size:18px; font-weight:700;
-  letter-spacing:.6px;
-  box-shadow:0 5px 20px rgba(23,184,35,.32);
-  margin-bottom:9px;
-  line-height:1;
-  text-align:center;
-}
-.btn-join-main:hover{ box-shadow:0 8px 26px rgba(23,184,35,.42); }
-.btn-joined-main{
-  background:transparent;
-  color:#484850;
-  font-size:12px; font-weight:400;
-  width:auto; margin:0 auto;
-  padding:7px 14px;
-  text-align:center;
-}
+.vc-sep{ width:1px; height:22px; background:var(--fc-orange); }
 
 button:focus-visible, .ww-row:focus-visible, input:focus-visible{
-  outline:2px solid #6cb2ff;
+  outline:2px solid var(--fc-orange);
   outline-offset:2px;
 }
 
@@ -406,8 +305,7 @@ button:focus-visible, .ww-row:focus-visible, input:focus-visible{
 }
 
 @media (max-width:450px){
-  .title{ font-size:19px; }
-  .join-btn{ padding:9px 14px; font-size:12px; }
+  .logo-badge img{ height:24px; }
   .controls{ justify-content:stretch; }
   .search-wrap{ max-width:100%; }
 }
@@ -421,13 +319,13 @@ button:focus-visible, .ww-row:focus-visible, input:focus-visible{
 
   <header>
     <div class="brand">
-      <div class="title">FANCODE LIVE</div>
+      <div class="logo-badge">
+        <img src="https://www.fancode.com/skillup-uploads/fc-web-logo/fc_logo_white_bg.svg" alt="FanCode logo">
+        <span class="logo-divider"></span>
+        <img src="https://raw.githubusercontent.com/saptarshiorg/saptarshiorg.github.io/refs/heads/main/magenta.png" alt="Saptarshi logo">
+      </div>
       <div class="last-update" id="lastUpdate">LAST UPDATE: LOADING...</div>
     </div>
-    <button type="button" class="join-btn" id="joinTelegramBtn">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.5L2.7 11.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14c.3-1.3-.5-1.9-1.8-1.8z"/></svg>
-      JOIN TELEGRAM
-    </button>
   </header>
 
   <div class="controls">
@@ -442,7 +340,7 @@ button:focus-visible, .ww-row:focus-visible, input:focus-visible{
   </div>
 
   <footer>
-    <div class="note">SAYAN OAI | ALL RIGHTS RESERVED</div>
+    <div class="note">SAPTARSHI - RISHI EV | ALL RIGHTS RESERVED</div>
     <div class="visitor-counter-box" id="visitorCounter">
       <div class="vc-item"><span class="vc-value" id="vcTotal">—</span><span class="vc-label">Visits</span></div>
       <div class="vc-sep"></div>
@@ -452,26 +350,10 @@ button:focus-visible, .ww-row:focus-visible, input:focus-visible{
 
 </div>
 
-<div class="popup-overlay hidden" id="telegramModal">
-  <div class="popup-wrap">
-    <div class="popup-box">
-      <div class="popup-title">Follow Us !!</div>
-      <div class="popup-text">
-        Join our Telegram channel<br>
-        <b>FANCODE LIVE</b>
-        For instant match links and live updates.
-      </div>
-      <a class="btn-popup btn-join-main" id="joinButton" target="_blank" rel="noopener noreferrer" href="https://t.me/+JSkwy86_04M2Zjdl">JOIN NOW</a>
-      <button class="btn-popup btn-joined-main" id="closeButton" type="button">Already Joined</button>
-    </div>
-  </div>
-</div>
-
 <script>
-const CNPTV_SOURCE = 'https://raw.githubusercontent.com/kajju027/Fancode-Events-Json/main/fan.json';
+const RISHIEVTV_SOURCE = 'https://raw.githubusercontent.com/kajju027/Fancode-Events-Json/main/fan.json';
 const WORLD_SOURCE  = 'https://raw.githubusercontent.com/kajju027/Fancode-Events-Json/main/fancode.json';
 const PLAYER_PAGE   = 'fcplayer.html';
-const TELEGRAM_LINK = 'https://t.me/+JSkwy86_04M2Zjdl';
 const FALLBACK_IMG  = 'https://www.fancode.com/skillup-uploads/cms-media/Cricket_Fallback_Old_match-card.jpg';
 const HIT_COUNTER_URL = 'https://sayan-prime.pages.dev/api/hit?key=Fancode';
 const REFRESH_INTERVAL_MS = 60000;
@@ -581,7 +463,7 @@ function renderCard(m){
   if(m.status === 'LIVE'){
     statusHtml = `<span class="status-badge live"><span class="status-dot-mini"></span>LIVE</span>`;
 
-    const canWatch = m.cnptvUrl && m.langCode;
+    const canWatch = m.rishievtvUrl && m.langCode;
     const watchAttrs = canWatch
       ? `data-url="${esc(buildPlayerUrl(m.id, m.langCode, 0))}"`
       : 'disabled';
@@ -613,7 +495,7 @@ function renderCard(m){
     `;
   } else if(m.status === 'COMPLETED'){
     statusHtml = `<span class="status-badge completed"><span class="status-dot-mini"></span>COMPLETED</span>`;
-    actionsHtml = `<a class="btn btn-completed" href="${TELEGRAM_LINK}" target="_blank" rel="noopener noreferrer">THANK YOU</a>`;
+    actionsHtml = `<button type="button" class="btn btn-completed" disabled>THANK YOU</button>`;
   } else {
     statusHtml = `<span class="status-badge upcoming"><span class="status-dot-mini"></span>UPCOMING</span>`;
     actionsHtml = `<button type="button" class="btn btn-upcoming" data-upcoming-time="${esc(timeLabel)}">UPCOMING</button>`;
@@ -693,15 +575,15 @@ function renderGrid(matches){
   grid.innerHTML = matches.map(renderCard).join('');
 }
 
-function buildMatches(cnptvData, worldData){
-  const cnptvMap = {};
-  (cnptvData.matches || []).forEach(m => { cnptvMap[m.match_id] = m; });
+function buildMatches(rishievtvData, worldData){
+  const rishievtvMap = {};
+  (rishievtvData.matches || []).forEach(m => { rishievtvMap[m.match_id] = m; });
 
   const matches = (worldData.matches || []).map(m => {
     const status = String(m.status || '').toUpperCase();
     const isLive = status === 'LIVE';
-    const cnptv = cnptvMap[m.match_id];
-    const cnptvUrl = cnptv && cnptv.cnptv_cdn ? cnptv.cnptv_cdn : null;
+    const rishievtv = rishievtvMap[m.match_id];
+    const rishievtvUrl = rishievtv && rishievtv.rishievtv_cdn ? rishievtv.rishievtv_cdn : null;
     const streams = m.streams || {};
 
     return {
@@ -714,7 +596,7 @@ function buildMatches(cnptvData, worldData){
       isLive,
       time: parseMatchTime(m.startTime),
       langCode: langToCode(m.language, isLive),
-      cnptvUrl,
+      rishievtvUrl,
       lk: streams.fancode_lk_cdn || null,
       np: streams.fancode_np_cdn || null,
       bd: streams.fancode_bd_cdn || null
@@ -733,8 +615,8 @@ function buildMatches(cnptvData, worldData){
 
 async function refresh(isFirstLoad){
   try{
-    const [cnptvData, worldData] = await Promise.all([
-      fetch(CNPTV_SOURCE, { cache:'no-store' }).then(r => r.json()).catch(() => ({ matches: [] })),
+    const [rishievtvData, worldData] = await Promise.all([
+      fetch(RISHIEVTV_SOURCE, { cache:'no-store' }).then(r => r.json()).catch(() => ({ matches: [] })),
       fetch(WORLD_SOURCE, { cache:'no-store' }).then(r => r.json())
     ]);
 
@@ -747,7 +629,7 @@ async function refresh(isFirstLoad){
     }
     lastWorldSnapshot = snapshot;
 
-    allMatches = buildMatches(cnptvData, worldData);
+    allMatches = buildMatches(rishievtvData, worldData);
     const q = searchInput.value.trim().toLowerCase();
     if(q){
       renderGrid(allMatches.filter(m => m.title.toLowerCase().includes(q) || m.tournament.toLowerCase().includes(q)));
@@ -781,25 +663,6 @@ attachHandlers();
 refresh(true);
 loadVisitorCounter();
 setInterval(() => refresh(false), REFRESH_INTERVAL_MS);
-
-document.getElementById('joinTelegramBtn').addEventListener('click', () => {
-  window.open(TELEGRAM_LINK, '_blank');
-});
-
-const telegramModal = document.getElementById('telegramModal');
-window.addEventListener('load', () => {
-  if(!sessionStorage.getItem('fc_telegram_joined')){
-    telegramModal.classList.remove('hidden');
-  }
-});
-document.getElementById('joinButton').addEventListener('click', () => {
-  sessionStorage.setItem('fc_telegram_joined', 'yes');
-  telegramModal.classList.add('hidden');
-});
-document.getElementById('closeButton').addEventListener('click', () => {
-  sessionStorage.setItem('fc_telegram_joined', 'yes');
-  telegramModal.classList.add('hidden');
-});
 </script>
 
 </body>
