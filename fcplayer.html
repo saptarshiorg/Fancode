@@ -657,6 +657,14 @@ body {
       errRetryNote.style.display = 'none';
       errSwitchBtn.href = 'fcplayer.html?id=' + currentMatchId + '_eng&s=0';
       errSwitchBtn.classList.add('show');
+    } else if (type === 'invalidlink') {
+      errIcon.innerHTML = ICON_ALERT;
+      errTitle.textContent = 'Stream Not Found';
+      errBadge.textContent = '"Invalid Link"';
+      errBody.innerHTML = 'This match link is missing or malformed.<br>Please open the stream from a valid match card.';
+      errRetryNote.style.display = 'none';
+      errSwitchBtn.classList.remove('show');
+      clearTimeout(retryTimer);
     } else if (type === 'notfound') {
       errIcon.innerHTML = ICON_ALERT;
       errTitle.textContent = 'Stream Not Found';
