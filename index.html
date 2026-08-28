@@ -3,686 +3,371 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EV FANCODE — Match Board</title>
-
+<title>EV SPORTS — Home</title>
 <link rel="preconnect" href="https://api.fontshare.com">
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
-
 <style>
-
 :root{
-  --bg:#0a0b0d;
-  --card:#131519;
-  --card-2:#1a1d22;
-  --border:#26292f;
-  --muted:#868b94;
-  --text:#f5f6f8;
-  --orange:#ff5a1f;
-  --orange-deep:#e8380d;
-  --orange-soft:rgba(255,90,31,.14);
-  --orange-soft-border:rgba(255,90,31,.4);
-  --live:#ff5a1f;
-  --live-shadow:rgba(255,90,31,.28);
-  --upcoming:#8a8f99;
-  --completed:#8a8f99;
+  --bg:#07080b; --surface:#101217; --surface2:#171a21; --text:#f7f7f8;
+  --muted:#9a9da6; --orange:#ff5a1f; --orange2:#ff761f;
+  --line:rgba(255,255,255,.10); --max:1440px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Satoshi,Segoe UI,Arial,sans-serif}
+body{overflow-x:hidden}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* HEADER */
+.header{
+  position:fixed;inset:0 0 auto;z-index:100;height:76px;
+  display:flex;align-items:center;gap:34px;padding:0 38px;
+  background:linear-gradient(180deg,rgba(4,5,8,.92),rgba(4,5,8,.55),transparent);
+}
+.brand{display:flex;align-items:center;gap:13px;flex:none}
+.brand img:first-child{height:31px;width:auto}
+.brand-divider{width:1px;height:27px;background:rgba(255,255,255,.24)}
+.brand img:last-child{height:28px;width:auto}
+.nav{display:flex;align-items:center;gap:29px;font-size:13px;font-weight:800;color:#9699a2}
+.nav a{transition:.2s}
+.nav a:hover,.nav a.active{color:#fff}
+.nav a.active{position:relative}
+.nav a.active:after{content:"";position:absolute;height:2px;background:var(--orange);left:0;right:0;bottom:-11px}
+.header-spacer{flex:1}
+.header-icon{
+  width:38px;height:38px;border:1px solid rgba(255,255,255,.22);border-radius:50%;
+  background:rgba(0,0,0,.22);color:#fff;display:grid;place-items:center
+}
+.premium-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(255,90,31,.48);
+  background:rgba(255,90,31,.12);
+  color:#fff;border-radius:22px;padding:9px 15px;
+  font-size:11px;font-weight:900;letter-spacing:.45px;
+  box-shadow:0 0 18px rgba(255,90,31,.08);
+}
+.premium-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#ff5a1f;box-shadow:0 0 8px rgba(255,90,31,.8);
 }
 
-*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html,body{ margin:0; padding:0; }
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Satoshi', 'Segoe UI', Arial, sans-serif;
-  -webkit-font-smoothing:antialiased;
+/* HERO */
+.hero{position:relative;height:min(650px,72vh);min-height:510px;overflow:hidden;background:#05070d}
+.hero-bg{position:absolute;inset:0;background:#07102a}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(1.1) contrast(1.03)}
+.hero-bg:after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(3,5,12,.98) 0%,rgba(3,5,12,.78) 25%,rgba(3,5,12,.15) 62%,rgba(3,5,12,.20) 100%),
+    linear-gradient(0deg,#07080b 0%,rgba(7,8,11,.35) 30%,rgba(7,8,11,.08) 70%);
 }
-*{ user-select:none; }
-button, input{ font-family:inherit; }
-img{ -webkit-user-drag:none; }
-a{ color:inherit; text-decoration:none; }
+.hero-content{
+  position:relative;z-index:2;height:100%;max-width:var(--max);margin:auto;
+  padding:165px 54px 75px;display:flex;align-items:center
+}
+.hero-copy{width:min(510px,46vw)}
+.hero-tag{display:inline-flex;background:#138bf5;color:#fff;font-size:11px;font-weight:900;padding:7px 12px;border-radius:3px;margin-bottom:13px}
+.hero-title{font-size:clamp(36px,4.2vw,62px);line-height:.98;margin:0 0 12px;font-weight:900;letter-spacing:-2px}
+.hero-title .vs{font-size:.55em;color:#8e929d;font-style:italic;margin:0 4px}
+.hero-event{font-size:14px;color:#aeb1b9;font-weight:600;margin-bottom:16px}
+.hero-time{font-size:15px;font-weight:800;margin-bottom:26px}
+.hero-actions{display:flex;gap:10px}
+.primary,.secondary{
+  min-width:180px;padding:14px 22px;border:0;border-radius:3px;font-weight:900;font-size:13px
+}
+.primary{background:#fff;color:#101114}
+.primary:hover{background:#eee}
+.secondary{background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.22)}
+.hero-arrow{
+  position:absolute;z-index:4;top:50%;transform:translateY(-50%);
+  width:42px;height:70px;border:0;background:transparent;color:#fff;font-size:42px;opacity:.9
+}
+.hero-arrow.left{left:8px}.hero-arrow.right{right:8px}
+.hero-dots{position:absolute;z-index:5;left:54px;bottom:38px;display:flex;gap:5px}
+.hero-dot{width:7px;height:7px;border:0;border-radius:50%;background:#666b74;padding:0}
+.hero-dot.active{width:19px;border-radius:5px;background:#fff}
 
-.app{ max-width:1360px; margin:0 auto; padding:0 20px 60px; }
-
-header{
-  position:sticky; top:0; z-index:40;
-  display:flex; align-items:center; justify-content:space-between;
-  gap:16px; flex-wrap:wrap;
-  padding:18px 4px;
-  background:rgba(10,11,13,0.9);
-  -webkit-backdrop-filter:blur(10px);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--border);
-  margin-bottom:26px;
-}
-.brand{ display:flex; align-items:center; gap:12px; }
-.brand-logos{
-  display:flex; align-items:center; gap:10px;
-  background:transparent;
-}
-.brand-logos img{
-  height:36px; width:auto;
-  background:transparent;
-  display:block;
-}
-.brand-divider{
-  width:1px; height:22px;
-  background:var(--border);
-}
-.brand-text{ display:flex; flex-direction:column; gap:4px; }
-.last-update{
-  font-size:11px;
-  color:var(--muted);
-  letter-spacing:.4px;
-  font-weight:500;
-}
-.controls{
-  display:flex; justify-content:flex-end;
-  margin-bottom:22px;
-}
-.search-wrap{
-  position:relative;
-  width:100%; max-width:340px;
-}
-.search-wrap svg{
-  position:absolute; left:13px; top:50%; transform:translateY(-50%);
-  opacity:.5; pointer-events:none;
-}
-.search-wrap input{
-  width:100%;
-  background:var(--card);
-  border:1px solid var(--border);
-  color:var(--text);
-  font-size:13px;
-  font-weight:500;
-  letter-spacing:.3px;
-  padding:11px 14px 11px 38px;
-  border-radius:0;
-  outline:none;
-  transition:border-color .2s ease;
-}
-.search-wrap input::placeholder{ color:var(--muted); }
-.search-wrap input:focus{ border-color:var(--orange); }
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-  gap:20px;
-}
-
-.loading-state, .empty-state{
-  grid-column:1/-1;
-  text-align:center;
-  padding:60px 20px;
-  color:var(--muted);
-  font-size:13.5px;
-  letter-spacing:.5px;
-  border:1px dashed var(--border);
-  border-radius:0;
-}
-
+/* CONTENT */
+.main{max-width:var(--max);margin:auto;padding:0 54px 55px}
+.section{margin-top:20px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+.section-title{font-size:24px;font-weight:900;letter-spacing:-.5px}
+.section-title span{font-size:25px;color:#c5c8ce;margin-left:5px}
+.section-link{font-size:12px;font-weight:800;color:#a7abb4}
+.section-link:hover{color:#fff}
+.rail{display:flex;gap:14px;overflow-x:auto;padding-bottom:9px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
 .card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:0;
-  overflow:hidden;
-  box-shadow:none;
-  transition:border-color .2s ease;
-  display:flex; flex-direction:column;
+  position:relative;flex:0 0 265px;height:170px;overflow:hidden;border-radius:3px;
+  background:#12151b;border:1px solid rgba(255,255,255,.08);cursor:pointer
 }
-.card:hover{
-  border-color:var(--orange-soft-border);
+.card img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.card:hover img{transform:scale(1.045)}
+.card:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(3,4,7,.95),rgba(3,4,7,.04) 70%)
 }
+.card-info{position:absolute;z-index:2;left:14px;right:12px;bottom:12px}
+.card-title{font-size:14px;font-weight:900;line-height:1.1}
+.card-sub{font-size:10px;color:#b5b8c0;margin-top:5px;font-weight:600}
+.badge{
+  position:absolute;z-index:3;left:11px;top:10px;padding:5px 8px;border-radius:3px;
+  background:rgba(0,0,0,.72);font-size:9px;font-weight:900;letter-spacing:.5px
+}
+.badge.live{color:#ff5a1f}.badge.upcoming{color:#fff}
+.live-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;margin-right:5px}
 
-.thumb-wrap{
-  position:relative;
-  width:100%;
-  height:180px;
-  background:#000;
-  display:flex; align-items:center; justify-content:center;
-  overflow:hidden;
+/* ALL MATCHES */
+.match-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.match-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;overflow:hidden;
+  transition:transform .2s,border-color .2s
 }
-.thumb-wrap img{
-  width:100%; height:100%;
-  object-fit:contain;
-  display:block;
+.match-card:hover{transform:translateY(-2px);border-color:rgba(255,90,31,.45)}
+.match-thumb{height:175px;position:relative;background:#080a0e}
+.match-thumb img{width:100%;height:100%;object-fit:cover}
+.match-thumb:after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(0deg,rgba(5,6,9,.95),transparent)}
+.match-body{padding:15px}
+.match-name{font-size:15px;font-weight:900;line-height:1.15}
+.match-event{color:var(--muted);font-size:11px;margin-top:7px}
+.match-time{color:#d0d2d7;font-size:11px;margin-top:5px}
+.match-btn{
+  width:100%;margin-top:13px;border:0;border-radius:3px;padding:11px;background:var(--orange);
+  color:#fff;font-size:11px;font-weight:900
 }
-.lang-badge{
-  position:absolute; top:10px; left:10px;
-  display:flex; align-items:center; gap:5px;
-  background:rgba(0,0,0,.75);
-  border:1px solid var(--orange);
-  color:var(--orange);
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:.6px;
-  padding:5px 9px;
-  border-radius:0;
-}
-.lang-badge svg{ flex:none; }
+.match-btn.up{background:var(--surface2);color:#d6d8dd;border:1px solid var(--line)}
+.match-btn.done{background:#20232a;color:#898d96}
+.loading,.empty{padding:55px;text-align:center;color:var(--muted);grid-column:1/-1}
 
-.meta{
-  padding:16px 18px 18px;
-  display:flex; flex-direction:column; gap:9px;
-  flex:1;
-  text-align:center;
+/* SEARCH */
+.search{
+  display:flex;align-items:center;gap:9px;background:rgba(16,18,23,.9);
+  border:1px solid var(--line);border-radius:3px;padding:9px 12px;width:260px
 }
-.teams{
-  font-size:17px;
-  font-weight:800;
-  letter-spacing:.2px;
-  text-transform:uppercase;
-  line-height:1.28;
-}
-.event{
-  font-size:12.5px;
-  color:var(--muted);
-  letter-spacing:.2px;
-  font-weight:500;
-}
+.search svg{opacity:.55}
+.search input{width:100%;border:0;outline:0;background:none;color:#fff;font-size:12px;font-weight:600}
+.search input::placeholder{color:#858993}
 
-.status-badge{
-  position:absolute; top:10px; right:10px;
-  display:flex; align-items:center; gap:5px;
-  background:rgba(0,0,0,.6);
-  font-size:9.5px;
-  font-weight:700;
-  letter-spacing:.6px;
-  padding:4px 9px;
-  border-radius:0;
-  opacity:.95;
-}
-.status-badge.live{ color:var(--orange); border:1px solid var(--orange-soft-border); }
-.status-badge.upcoming{ color:#c7cad0; border:1px solid rgba(138,143,153,.4); }
-.status-badge.completed{ color:#c7cad0; border:1px solid rgba(138,143,153,.3); }
-.status-dot-mini{ width:5px; height:5px; border-radius:50%; background:currentColor; flex:none; }
-.status-badge.live .status-dot-mini{ animation:miniPulse 1.8s infinite; }
-@keyframes miniPulse{
-  0%,100%{ opacity:1; }
-  50%{ opacity:.4; }
-}
+/* FOOTER */
+.footer{margin-top:50px;border-top:1px solid var(--line);padding:28px 0;color:#777b84;text-align:center;font-size:10px;letter-spacing:.7px}
 
-.card-time{
-  font-size:11px;
-  color:var(--muted);
-  letter-spacing:.3px;
-  font-weight:500;
+/* RESPONSIVE */
+@media(max-width:1050px){
+  .nav{gap:16px}.header{padding:0 20px;gap:20px}.main{padding:0 25px 45px}
+  .hero-content{padding-left:45px}.hero-dots{left:45px}.match-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
-
-.actions{ margin-top:auto; display:flex; flex-direction:column; gap:8px; padding-top:4px; }
-
-.btn{
-  appearance:none; border:none; cursor:pointer;
-  width:100%;
-  font-weight:800;
-  font-size:13px;
-  letter-spacing:.5px;
-  padding:12px 14px;
-  border-radius:0;
-  display:flex; align-items:center; justify-content:center; gap:8px;
-  transition:background .2s ease, transform .15s ease;
+@media(max-width:760px){
+  .header{height:64px}.brand img:first-child{height:25px}.brand img:last-child{height:23px}
+  .nav{display:none}.premium-badge{display:inline-flex;font-size:9px;padding:7px 10px}
+  .hero{height:560px;min-height:0}.hero-content{padding:135px 24px 65px;align-items:flex-start}
+  .hero-copy{width:78%}.hero-title{font-size:39px}.hero-bg img{object-position:62% center}
+  .hero-bg:after{background:linear-gradient(90deg,rgba(3,5,12,.97),rgba(3,5,12,.56) 65%,rgba(3,5,12,.18)),linear-gradient(0deg,#07080b,transparent 60%)}
+  .hero-arrow{width:28px;font-size:32px}.hero-dots{left:24px;bottom:28px}
+  .main{padding:0 18px 40px}.section-title{font-size:20px}
+  .search{width:100%}.section-head{gap:12px;flex-wrap:wrap}.match-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-.btn:active{ transform:scale(.98); }
-.btn-watch-now{
-  background:var(--orange);
-  color:#fff;
-  box-shadow:none;
+@media(max-width:480px){
+  .hero-copy{width:90%}.hero-title{font-size:34px;letter-spacing:-1px}
+  .hero-actions .secondary{display:none}.primary{min-width:160px}
+  .card{flex-basis:235px;height:150px}.match-grid{grid-template-columns:1fr}
 }
-.btn-watch-now:hover{ background:var(--orange-deep); }
-.btn-watch-now.is-disabled{
-  background:var(--card-2); color:var(--muted); box-shadow:none; cursor:not-allowed;
-}
-.btn-upcoming{
-  background:transparent;
-  color:var(--text);
-  border:1px solid var(--border);
-  box-shadow:none;
-}
-.btn-upcoming:hover{ border-color:var(--orange); color:var(--orange); }
-.btn-completed{
-  background:var(--card-2);
-  color:var(--muted);
-  box-shadow:none;
-  border:1px solid var(--border);
-  cursor:default;
-}
-
-.btn-ww{
-  background:transparent;
-  color:var(--text);
-  border:1px solid var(--border);
-}
-.btn-ww:hover{ border-color:var(--orange); color:var(--orange); }
-.btn-ww .chev{ margin-left:auto; transition:transform .3s ease; }
-.btn-ww.open{ border-color:var(--orange); color:var(--orange); }
-.btn-ww.open .chev{ transform:rotate(180deg); }
-
-.ww-panel-wrap{
-  display:grid;
-  grid-template-rows:0fr;
-  opacity:0;
-  transition:grid-template-rows .38s cubic-bezier(.4,0,.2,1), opacity .3s ease;
-}
-.ww-panel-wrap.open{ grid-template-rows:1fr; opacity:1; margin-top:1px; }
-.ww-panel-inner{ overflow:hidden; display:flex; flex-direction:column; gap:6px; }
-.ww-row{
-  display:flex; align-items:center; gap:10px;
-  padding:10px 12px;
-  background:var(--card-2);
-  border:1px solid var(--border);
-  border-left:2px solid transparent;
-  border-radius:0;
-  cursor:pointer;
-  transition:background .2s ease, border-color .2s ease;
-}
-.ww-row:hover{
-  background:var(--orange-soft);
-  border-color:var(--orange-soft-border);
-  border-left-color:var(--orange);
-}
-.ww-flag{ font-size:16px; line-height:1; flex:none; }
-.ww-name{ font-size:12px; font-weight:700; flex:1; text-align:left; letter-spacing:.2px; }
-.ww-code{ font-size:10px; font-weight:700; letter-spacing:.5px; color:var(--muted); }
-.ww-row:hover .ww-code{ color:var(--orange); }
-
-footer{
-  margin-top:50px;
-  padding-top:26px;
-  border-top:1px solid var(--border);
-  display:flex; flex-direction:column; align-items:center; gap:10px;
-  text-align:center;
-}
-footer .note{
-  font-size:11px;
-  letter-spacing:1px;
-  color:var(--muted);
-  font-weight:700;
-}
-.visitor-counter-box{
-  display:flex; align-items:center; gap:12px;
-  padding:9px 18px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:0;
-}
-.vc-item{ display:flex; flex-direction:column; align-items:center; gap:2px; }
-.vc-value{
-  font-size:15px; font-weight:800; color:var(--text);
-  letter-spacing:.5px; font-variant-numeric:tabular-nums;
-}
-.vc-label{ font-size:8.5px; letter-spacing:.8px; color:var(--muted); text-transform:uppercase; }
-.vc-sep{ width:1px; height:22px; background:var(--border); }
-
-button:focus-visible, .ww-row:focus-visible, input:focus-visible{
-  outline:2px solid var(--orange);
-  outline-offset:2px;
-}
-
-@media (prefers-reduced-motion: reduce){
-  *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
-}
-
-@media (max-width:450px){
-  .brand-logos img{ height:26px; }
-  .controls{ justify-content:stretch; }
-  .search-wrap{ max-width:100%; }
-}
-
 </style>
 </head>
-
 <body>
 
-<div class="app">
+<header class="header">
+  <a class="brand" href="#">
+    <img src="https://raw.githubusercontent.com/saptarshiorg/saptarshiorg.github.io/refs/heads/main/magenta.png" alt="EV logo">
+    <span class="brand-divider"></span>
+    <img src="https://www.fancode.com/skillup-uploads/fc-web-logo/fc_logo_white_bg.svg" alt="FanCode logo">
+  </a>
+  <nav class="nav">
+    <a class="active" href="#">Home</a><a href="#live">Live Now</a><a href="#schedule">Schedule</a>
+    <a href="#cricket">Cricket</a><a href="#football">Football</a><a href="#all">All Sports</a>
+  </nav>
+  <div class="header-spacer"></div>
+  <div class="premium-badge"><span class="premium-dot"></span> PREMIUM ACTIVATED</div>
+</header>
 
-  <header>
-    <div class="brand">
-      <div class="brand-logos">
-        <img src="https://raw.githubusercontent.com/saptarshiorg/saptarshiorg.github.io/refs/heads/main/magenta.png" alt="EV logo">
-        <div class="brand-divider"></div>
-        <img src="https://www.fancode.com/skillup-uploads/fc-web-logo/fc_logo_white_bg.svg" alt="FanCode logo">
+<section class="hero" id="hero">
+  <div class="hero-bg"><img id="heroImage" src="" alt=""></div>
+  <button class="hero-arrow left" id="heroPrev" aria-label="Previous">‹</button>
+  <button class="hero-arrow right" id="heroNext" aria-label="Next">›</button>
+  <div class="hero-content">
+    <div class="hero-copy">
+      <div class="hero-tag" id="heroStatus">UPCOMING</div>
+      <h1 class="hero-title" id="heroTitle">Loading matches...</h1>
+      <div class="hero-event" id="heroEvent"></div>
+      <div class="hero-time" id="heroTime"></div>
+      <div class="hero-actions">
+        <button class="primary" id="heroAction">VIEW DETAILS</button>
+        <button class="secondary" id="heroSchedule">SCHEDULE</button>
       </div>
-      <div class="brand-text">
-        <div class="last-update" id="lastUpdate">LAST UPDATE: LOADING...</div>
-      </div>
-    </div>
-  </header>
-
-  <div class="controls">
-    <div class="search-wrap">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input type="text" id="searchInput" placeholder="SEARCH TEAM OR EVENT...">
     </div>
   </div>
+  <div class="hero-dots" id="heroDots"></div>
+</section>
 
-  <div id="matchesGrid" class="grid">
-    <div class="loading-state">LOADING MATCHES...</div>
-  </div>
-
-  <footer>
-    <div class="note">CREDITS TO RISHI.EV | Saptarshi Samanta</div>
-    <div class="visitor-counter-box" id="visitorCounter">
-      <div class="vc-item"><span class="vc-value" id="vcTotal">—</span><span class="vc-label">Visits</span></div>
-      <div class="vc-sep"></div>
-      <div class="vc-item"><span class="vc-value" id="vcUnique">—</span><span class="vc-label">Unique</span></div>
+<main class="main">
+  <section class="section" id="live">
+    <div class="section-head">
+      <div class="section-title">All Live Now <span id="liveCount">(0)</span></div>
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="searchInput" placeholder="SEARCH TEAM OR EVENT...">
+      </div>
     </div>
-  </footer>
+    <div class="rail" id="liveRail"><div class="loading">LOADING...</div></div>
+  </section>
 
-</div>
+  <section class="section" id="schedule">
+    <div class="section-head">
+      <div class="section-title">Upcoming Matches</div>
+      <a class="section-link" href="#all">VIEW ALL ›</a>
+    </div>
+    <div class="rail" id="upcomingRail"><div class="loading">LOADING...</div></div>
+  </section>
+
+  <section class="section" id="all">
+    <div class="section-head"><div class="section-title">All Matches</div></div>
+    <div class="match-grid" id="matchesGrid"><div class="loading">LOADING MATCHES...</div></div>
+  </section>
+
+  <footer class="footer">CREDITS TO RISHI.EV | Saptarshi Samanta</footer>
+</main>
 
 <script>
-const CNPTV_SOURCE = 'https://raw.githubusercontent.com/kajju027/Fancode-Events-Json/main/fan.json';
-const WORLD_SOURCE  = 'https://raw.githubusercontent.com/kajju027/Fancode-Events-Json/main/fancode.json';
-const PLAYER_PAGE   = 'fcplayer.html';
-const FALLBACK_IMG  = 'https://www.fancode.com/skillup-uploads/cms-media/Cricket_Fallback_Old_match-card.jpg';
-const HIT_COUNTER_URL = 'https://sayan-prime.pages.dev/api/hit?key=Fancode';
-const REFRESH_INTERVAL_MS = 60000;
+const CNPTV_SOURCE='https://raw.githubusercontent.com/kajju027/Fancode-Events-Json/main/fan.json';
+const WORLD_SOURCE='https://raw.githubusercontent.com/kajju027/Fancode-Events-Json/main/fancode.json';
+const PLAYER_PAGE='fcplayer.html';
+const FALLBACK_IMG='https://www.fancode.com/skillup-uploads/cms-media/Cricket_Fallback_Old_match-card.jpg';
+const LANG_CODE_MAP={ENGLISH:'eng',HINDI:'hin',BANGLA:'ban',BENGALI:'ban',TAMIL:'tam',TELUGU:'tel',KANNADA:'kan',MARATHI:'mar',MALAYALAM:'mal',PUNJABI:'pan',GUJARATI:'guj',URDU:'urd',ODIA:'ori',ASSAMESE:'asm',BHOJPURI:'bho'};
 
-const LANG_CODE_MAP = {
-  ENGLISH:'eng', HINDI:'hin', BANGLA:'ban', BENGALI:'ban', TAMIL:'tam',
-  TELUGU:'tel', KANNADA:'kan', MARATHI:'mar', MALAYALAM:'mal', PUNJABI:'pan',
-  GUJARATI:'guj', URDU:'urd', ODIA:'ori', ASSAMESE:'asm', BHOJPURI:'bho'
-};
+let allMatches=[], heroes=[], heroIndex=0, heroTimer=null;
 
-const ICON_GLOBE = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.7 3.8 6 3.8 9s-1.4 6.3-3.8 9c-2.4-2.7-3.8-6-3.8-9s1.4-6.3 3.8-9z"/></svg>';
-const ICON_WW    = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.7 3.8 6 3.8 9s-1.4 6.3-3.8 9c-2.4-2.7-3.8-6-3.8-9s1.4-6.3 3.8-9z"/></svg>';
-const ICON_CHEV  = '<svg class="chev" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>';
-
-const grid       = document.getElementById('matchesGrid');
-const lastUpdateEl = document.getElementById('lastUpdate');
-const searchInput  = document.getElementById('searchInput');
-
-let allMatches = [];
-let lastUpdatedAt = null;
-let lastWorldSnapshot = null;
-let openPanels = new Set();
-
-function esc(str){
-  return String(str == null ? '' : str).replace(/[&<>"']/g, s => ({
-    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
-  }[s]));
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function parseTime(str){
+  if(!str)return null;
+  const m=String(str).match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})\s+(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
+  if(!m){const d=new Date(str);return isNaN(d)?null:d}
+  const months={january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
+  let [,day,mon,year,hour,min,ampm]=m; let h=+hour;
+  if(ampm){ampm=ampm.toUpperCase();if(ampm==='PM'&&h<12)h+=12;if(ampm==='AM'&&h===12)h=0}
+  return new Date(+year,months[mon.toLowerCase()],+day,h,+min);
 }
-
-function langToCode(rawLang, isLive){
-  let lang = String(rawLang || '').trim().toUpperCase();
-  if(!lang || lang === 'BLOODY_SWEET'){
-    if(isLive){ lang = 'ENGLISH'; } else { return null; }
-  }
-  if(LANG_CODE_MAP[lang]) return LANG_CODE_MAP[lang];
-  const short = lang.slice(0,3).toLowerCase();
-  return short || 'eng';
+function fmt(d){
+  if(!d)return 'TIME TBA';
+  return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'}).toUpperCase()+', '+
+    d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit',hour12:true}).toUpperCase();
 }
-
-function langLabel(rawLang){
-  const lang = String(rawLang || '').trim().toUpperCase();
-  if(!lang) return null;
-  if(lang === 'BLOODY_SWEET') return 'MULTI';
-  return lang;
+function langCode(raw){const x=String(raw||'').trim().toUpperCase();return LANG_CODE_MAP[x]||x.slice(0,3).toLowerCase()||'eng'}
+function playerUrl(m,i=0){return `${PLAYER_PAGE}?id=${m.id}_${langCode(m.language)}&s=${i}`}
+function openNewTab(url){
+  if(!url)return;
+  const w=window.open(url,'_blank','noopener,noreferrer');
+  if(!w) window.location.href=url;
 }
-
-function parseMatchTime(str){
-  if(!str) return null;
-  const months = {january:0,february:1,march:2,april:3,may:4,june:5,july:6,
-                   august:7,september:8,october:9,november:10,december:11};
-  const m = String(str).match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})\s+(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
-  if(!m){ const d = new Date(str); return isNaN(d) ? null : d; }
-  let [, day, monthName, year, hour, min, ampm] = m;
-  const month = months[monthName.toLowerCase()];
-  if(month === undefined){ const d = new Date(str); return isNaN(d) ? null : d; }
-  day = +day; year = +year; hour = +hour; min = +min;
-  if(ampm){
-    ampm = ampm.toUpperCase();
-    if(ampm === 'PM' && hour < 12) hour += 12;
-    if(ampm === 'AM' && hour === 12) hour = 0;
-  }
-  return new Date(year, month, day, hour, min);
-}
-
-function parseUpdatedAt(str){
-  if(!str) return null;
-  const m = String(str).match(/(\d{1,2})\/(\d{1,2})\/(\d{4}),?\s*(\d{1,2}):(\d{2}):(\d{2})\s*(am|pm)/i);
-  if(!m){ const d = new Date(str); return isNaN(d) ? null : d; }
-  let day = +m[1], month = +m[2], year = +m[3], hour = +m[4], min = +m[5], sec = +m[6];
-  const ampm = m[7].toLowerCase();
-  if(ampm === 'pm' && hour < 12) hour += 12;
-  if(ampm === 'am' && hour === 12) hour = 0;
-  return new Date(year, month - 1, day, hour, min, sec);
-}
-
-function formatMatchTime(date){
-  if(!date) return 'TIME TBA';
-  const datePart = date.toLocaleDateString('en-IN', { day:'2-digit', month:'short' }).toUpperCase();
-  let h = date.getHours();
-  const mm = String(date.getMinutes()).padStart(2, '0');
-  const ap = h >= 12 ? 'PM' : 'AM';
-  h = h % 12; if(h === 0) h = 12;
-  return `${datePart}, ${h}:${mm} ${ap}`;
-}
-
-function formatAbsoluteIST(date){
-  if(!date) return 'UNAVAILABLE';
-  const datePart = date.toLocaleDateString('en-IN', { day:'2-digit', month:'short' }).toUpperCase();
-  let h = date.getHours();
-  const mm = String(date.getMinutes()).padStart(2, '0');
-  const ap = h >= 12 ? 'PM' : 'AM';
-  h = h % 12; if(h === 0) h = 12;
-  return `${datePart}, ${h}:${mm} ${ap} IST`;
-}
-
-function buildPlayerUrl(id, langCode, streamIndex){
-  return `${PLAYER_PAGE}?id=${id}_${langCode}&s=${streamIndex}`;
-}
-
-function renderCard(m){
-  const langTag = m.status === 'LIVE' ? langLabel(m.language) : null;
-  const timeLabel = formatMatchTime(m.time);
-
-  let statusHtml = '';
-  let actionsHtml = '';
-
-  if(m.status === 'LIVE'){
-    statusHtml = `<span class="status-badge live"><span class="status-dot-mini"></span>LIVE</span>`;
-
-    const canWatch = m.cnptvUrl && m.langCode;
-    const watchAttrs = canWatch
-      ? `data-url="${esc(buildPlayerUrl(m.id, m.langCode, 0))}"`
-      : 'disabled';
-
-    const wwOptions = [
-      { key:'lk', flag:'🇱🇰', name:'Only Sri Lanka User',  url:m.lk, idx:1 },
-      { key:'np', flag:'🇳🇵', name:'Only Nepal User',      url:m.np, idx:2 },
-      { key:'bd', flag:'🇧🇩', name:'Only Bangladesh User', url:m.bd, idx:3 }
-    ].filter(o => o.url);
-    const hasAnyWW = m.langCode && wwOptions.length > 0;
-    const isOpen = openPanels.has(String(m.id));
-
-    actionsHtml = `
-      <button type="button" class="btn btn-watch-now ${canWatch ? '' : 'is-disabled'}" ${watchAttrs}>WATCH NOW</button>
-      ${hasAnyWW ? `
-      <button type="button" class="btn btn-ww ${isOpen ? 'open' : ''}" data-target="ww-${m.id}">
-        ${ICON_WW} WORLD WIDE STREAM ${ICON_CHEV}
-      </button>
-      <div class="ww-panel-wrap ${isOpen ? 'open' : ''}" id="ww-${m.id}">
-        <div class="ww-panel-inner">
-          ${wwOptions.map(o => `
-            <div class="ww-row" tabindex="0" data-url="${esc(buildPlayerUrl(m.id, m.langCode, o.idx))}">
-              <span class="ww-flag">${o.flag}</span>
-              <span class="ww-name">${o.name}</span>
-              <span class="ww-code">${o.key.toUpperCase()}</span>
-            </div>`).join('')}
-        </div>
-      </div>` : ''}
-    `;
-  } else if(m.status === 'COMPLETED'){
-    statusHtml = `<span class="status-badge completed"><span class="status-dot-mini"></span>COMPLETED</span>`;
-    actionsHtml = `<div class="btn btn-completed">THANK YOU</div>`;
-  } else {
-    statusHtml = `<span class="status-badge upcoming"><span class="status-dot-mini"></span>UPCOMING</span>`;
-    actionsHtml = `<button type="button" class="btn btn-upcoming" data-upcoming-time="${esc(timeLabel)}">UPCOMING</button>`;
-  }
-
-  return `
-    <article class="card" data-match-id="${esc(m.id)}">
-      <div class="thumb-wrap">
-        <img src="${esc(m.image)}" alt="${esc(m.title)}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMG}'">
-        ${langTag ? `<span class="lang-badge">${ICON_GLOBE}${esc(langTag)}</span>` : ''}
-        ${statusHtml}
-      </div>
-      <div class="meta">
-        <div class="teams">${esc(m.title)}</div>
-        <div class="event">${esc(m.tournament)}</div>
-        <div class="card-time">${esc(timeLabel)}</div>
-        <div class="actions">${actionsHtml}</div>
-      </div>
-    </article>
-  `;
-}
-
-function attachHandlers(){
-  grid.addEventListener('click', (e) => {
-    const watchBtn = e.target.closest('.btn-watch-now');
-    if(watchBtn && watchBtn.dataset.url){
-      window.location.href = watchBtn.dataset.url;
-      return;
-    }
-    const row = e.target.closest('.ww-row');
-    if(row && row.dataset.url){
-      window.location.href = row.dataset.url;
-      return;
-    }
-    const wwBtn = e.target.closest('.btn-ww');
-    if(wwBtn){
-      const matchId = wwBtn.closest('.card').dataset.matchId;
-      const panel = document.getElementById(wwBtn.dataset.target);
-      if(panel){
-        const willOpen = !panel.classList.contains('open');
-        panel.classList.toggle('open', willOpen);
-        wwBtn.classList.toggle('open', willOpen);
-        if(willOpen){ openPanels.add(matchId); } else { openPanels.delete(matchId); }
-      }
-      return;
-    }
-    const upcomingBtn = e.target.closest('.btn-upcoming');
-    if(upcomingBtn){
-      alert('This match is scheduled to start at:\n' + upcomingBtn.dataset.upcomingTime);
-    }
-  });
-
-  grid.addEventListener('keydown', (e) => {
-    if(e.key !== 'Enter' && e.key !== ' ') return;
-    const row = e.target.closest('.ww-row');
-    if(row && row.dataset.url){
-      e.preventDefault();
-      window.location.href = row.dataset.url;
-    }
-  });
-
-  searchInput.addEventListener('input', () => {
-    const q = searchInput.value.trim().toLowerCase();
-    if(!q){ renderGrid(allMatches); return; }
-    const filtered = allMatches.filter(m =>
-      m.title.toLowerCase().includes(q) || m.tournament.toLowerCase().includes(q)
-    );
-    renderGrid(filtered);
-  });
-}
-
-function renderGrid(matches){
-  if(!matches.length){
-    grid.innerHTML = `<div class="empty-state">No matches found.</div>`;
-    return;
-  }
-  grid.innerHTML = matches.map(renderCard).join('');
-}
-
-function buildMatches(cnptvData, worldData){
-  const cnptvMap = {};
-  (cnptvData.matches || []).forEach(m => { cnptvMap[m.match_id] = m; });
-
-  const matches = (worldData.matches || []).map(m => {
-    const status = String(m.status || '').toUpperCase();
-    const isLive = status === 'LIVE';
-    const cnptv = cnptvMap[m.match_id];
-    const cnptvUrl = cnptv && cnptv.cnptv_cdn ? cnptv.cnptv_cdn : null;
-    const streams = m.streams || {};
-
+function buildMatches(cn,world){
+  const map={};(cn.matches||[]).forEach(x=>map[x.match_id]=x);
+  return (world.matches||[]).map(x=>{
+    const status=String(x.status||'').toUpperCase();
+    const c=map[x.match_id], streams=x.streams||{};
     return {
-      id: m.match_id,
-      title: m.title || 'Match',
-      tournament: m.tournament || '',
-      image: m.image || FALLBACK_IMG,
-      status: status === 'LIVE' || status === 'COMPLETED' ? status : 'UPCOMING',
-      language: m.language,
-      isLive,
-      time: parseMatchTime(m.startTime),
-      langCode: langToCode(m.language, isLive),
-      cnptvUrl,
-      lk: streams.fancode_lk_cdn || null,
-      np: streams.fancode_np_cdn || null,
-      bd: streams.fancode_bd_cdn || null
-    };
+      id:x.match_id,title:x.title||'Match',tournament:x.tournament||'',image:x.image||FALLBACK_IMG,
+      status:status==='LIVE'?'LIVE':status==='COMPLETED'?'COMPLETED':'UPCOMING',
+      time:parseTime(x.startTime),language:x.language,cnptv:c?.cnptv_cdn||null,
+      lk:streams.fancode_lk_cdn||null,np:streams.fancode_np_cdn||null,bd:streams.fancode_bd_cdn||null
+    }
+  }).sort((a,b)=>{
+    const rank={LIVE:0,UPCOMING:1,COMPLETED:2};
+    if(rank[a.status]!==rank[b.status])return rank[a.status]-rank[b.status];
+    return (a.time?.getTime()||Infinity)-(b.time?.getTime()||Infinity);
   });
-
-  matches.sort((a, b) => {
-    if(a.isLive !== b.isLive) return a.isLive ? -1 : 1;
-    const at = a.time ? a.time.getTime() : Infinity;
-    const bt = b.time ? b.time.getTime() : Infinity;
-    return at - bt;
-  });
-
-  return matches;
 }
 
-async function refresh(isFirstLoad){
+function card(m,compact=false){
+  const live=m.status==='LIVE';
+  return `<article class="${compact?'card':'match-card'}" data-id="${esc(m.id)}">
+    <div class="${compact?'':'match-thumb'}">
+      <img src="${esc(m.image)}" alt="${esc(m.title)}" onerror="this.src='${FALLBACK_IMG}'">
+      <span class="badge ${live?'live':'upcoming'}">${live?'<span class="live-dot"></span>LIVE':m.status}</span>
+    </div>
+    ${compact?`<div class="card-info"><div class="card-title">${esc(m.title)}</div><div class="card-sub">${esc(m.tournament)} • ${esc(fmt(m.time))}</div></div>`:
+    `<div class="match-body"><div class="match-name">${esc(m.title)}</div><div class="match-event">${esc(m.tournament)}</div><div class="match-time">${esc(fmt(m.time))}</div>
+      <button class="match-btn ${m.status==='UPCOMING'?'up':''} ${m.status==='COMPLETED'?'done':''}" data-watch="${m.status==='LIVE'?'1':'0'}">${m.status==='LIVE'?'WATCH NOW':m.status==='COMPLETED'?'THANK YOU':'UPCOMING'}</button></div>`}
+  </article>`;
+}
+
+function renderRails(list){
+  const live=list.filter(m=>m.status==='LIVE'), upcoming=list.filter(m=>m.status==='UPCOMING');
+  document.getElementById('liveCount').textContent=`(${live.length})`;
+  document.getElementById('liveRail').innerHTML=live.length?live.map(m=>card(m,true)).join(''):'<div class="loading">NO LIVE MATCHES RIGHT NOW</div>';
+  document.getElementById('upcomingRail').innerHTML=upcoming.length?upcoming.map(m=>card(m,true)).join(''):'<div class="loading">NO UPCOMING MATCHES</div>';
+}
+function renderGrid(list){document.getElementById('matchesGrid').innerHTML=list.length?list.map(m=>card(m)).join(''):'<div class="empty">No matches found.</div>'}
+
+function setHero(i,reset=true){
+  if(!heroes.length)return;
+  heroIndex=(i+heroes.length)%heroes.length;const m=heroes[heroIndex];
+  const img=document.getElementById('heroImage');img.src=m.image;img.alt=m.title;
+  document.getElementById('heroStatus').textContent=m.status;
+  document.getElementById('heroTitle').innerHTML=esc(m.title).replace(/\s+vs\s+/i,' <span class="vs">VS</span> ');
+  document.getElementById('heroEvent').textContent=`${m.tournament}${m.tournament&&m.time?' • ':''}${m.time?'Match time':''}`;
+  document.getElementById('heroTime').textContent=m.time?fmt(m.time):'TIME TBA';
+  document.getElementById('heroAction').textContent=m.status==='LIVE'?'WATCH NOW':'VIEW DETAILS';
+  document.getElementById('heroAction').onclick=()=>{ if(m.status==='LIVE'&&m.cnptv) openNewTab(playerUrl(m)); else document.getElementById('schedule').scrollIntoView({behavior:'smooth'}) };
+  const dots=document.getElementById('heroDots');
+  dots.innerHTML=heroes.slice(0,9).map((_,n)=>`<button class="hero-dot ${n===heroIndex?'active':''}" data-i="${n}"></button>`).join('');
+  if(reset){clearInterval(heroTimer);heroTimer=setInterval(()=>setHero(heroIndex+1,false),6500)}
+}
+function attach(){
+  document.getElementById('heroPrev').onclick=()=>setHero(heroIndex-1);
+  document.getElementById('heroNext').onclick=()=>setHero(heroIndex+1);
+  document.getElementById('heroDots').onclick=e=>{const b=e.target.closest('[data-i]');if(b)setHero(+b.dataset.i)};
+  document.addEventListener('click',e=>{
+    const c=e.target.closest('.match-card');
+    if(c){const m=allMatches.find(x=>String(x.id)===c.dataset.id);if(m?.status==='LIVE'&&m.cnptv)openNewTab(playerUrl(m))}
+  });
+  document.getElementById('searchInput').oninput=e=>{
+    const q=e.target.value.trim().toLowerCase();
+    renderGrid(allMatches.filter(m=>!q||m.title.toLowerCase().includes(q)||m.tournament.toLowerCase().includes(q)));
+  };
+}
+async function refresh(){
   try{
-    const [cnptvData, worldData] = await Promise.all([
-      fetch(CNPTV_SOURCE, { cache:'no-store' }).then(r => r.json()).catch(() => ({ matches: [] })),
-      fetch(WORLD_SOURCE, { cache:'no-store' }).then(r => r.json())
+    const [cn,world]=await Promise.all([
+      fetch(CNPTV_SOURCE,{cache:'no-store'}).then(r=>r.json()).catch(()=>({matches:[]})),
+      fetch(WORLD_SOURCE,{cache:'no-store'}).then(r=>r.json())
     ]);
-
-    lastUpdatedAt = parseUpdatedAt(worldData.updatedAt) || new Date();
-
-    const snapshot = JSON.stringify(worldData.matches || []);
-    if(!isFirstLoad && snapshot === lastWorldSnapshot){
-      lastUpdateEl.textContent = 'LAST UPDATE: ' + formatAbsoluteIST(lastUpdatedAt);
-      return;
-    }
-    lastWorldSnapshot = snapshot;
-
-    allMatches = buildMatches(cnptvData, worldData);
-    const q = searchInput.value.trim().toLowerCase();
-    if(q){
-      renderGrid(allMatches.filter(m => m.title.toLowerCase().includes(q) || m.tournament.toLowerCase().includes(q)));
-    } else {
-      renderGrid(allMatches);
-    }
-    lastUpdateEl.textContent = 'LAST UPDATE: ' + formatAbsoluteIST(lastUpdatedAt);
-  } catch(err){
-    console.error('FanCode board failed to load:', err);
-    if(isFirstLoad){
-      grid.innerHTML = `<div class="empty-state">Couldn't load the match board. Try refreshing.</div>`;
-      lastUpdateEl.textContent = 'LAST UPDATE: UNAVAILABLE';
-    }
+    allMatches=buildMatches(cn,world);
+    heroes=allMatches.filter(m=>m.status!=='COMPLETED').slice(0,9);
+    if(!heroes.length)heroes=allMatches.slice(0,9);
+    renderRails(allMatches);renderGrid(allMatches);setHero(Math.min(heroIndex,Math.max(0,heroes.length-1)));
+  }catch(e){
+    document.getElementById('matchesGrid').innerHTML='<div class="empty">Could not load matches. Please refresh.</div>';
+    document.getElementById('heroTitle').textContent='Unable to load matches';
   }
 }
 
-function loadVisitorCounter(){
-  fetch(HIT_COUNTER_URL, { cache:'no-store' })
-    .then(r => r.json())
-    .then(data => {
-      document.getElementById('vcTotal').textContent = data.total_formatted != null ? data.total_formatted : '—';
-      document.getElementById('vcUnique').textContent = data.unique_formatted != null ? data.unique_formatted : '—';
-    })
-    .catch(() => {
-      const box = document.getElementById('visitorCounter');
-      if(box){ box.style.display = 'none'; }
-    });
-}
+/* EMBED PROTECTION
+   If this page is placed inside an iframe on another site, attempt to
+   open the standalone page in a new tab. Normal top-level use is unchanged.
+*/
+(function(){
+  try{
+    if(window.top !== window.self){
+      const standaloneUrl = window.location.href;
+      const popup = window.open(standaloneUrl, '_blank', 'noopener,noreferrer');
+      if(popup){
+        try{ window.top.location.replace('about:blank'); }catch(e){}
+      }
+    }
+  }catch(e){}
+})();
 
-
-attachHandlers();
-refresh(true);
-loadVisitorCounter();
-setInterval(() => refresh(false), REFRESH_INTERVAL_MS);
+attach();refresh();
 </script>
-
 </body>
 </html>
