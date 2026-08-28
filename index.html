@@ -317,7 +317,14 @@ function setHero(i,reset=true){
   document.getElementById('heroEvent').textContent=`${m.tournament}${m.tournament&&m.time?' • ':''}${m.time?'Match time':''}`;
   document.getElementById('heroTime').textContent=m.time?fmt(m.time):'TIME TBA';
   document.getElementById('heroAction').textContent=m.status==='LIVE'?'WATCH NOW':'VIEW DETAILS';
-  document.getElementById('heroAction').onclick=()=>{ if(m.status==='LIVE'&&m.cnptv) openNewTab(playerUrl(m)); else document.getElementById('schedule').scrollIntoView({behavior:'smooth'}) };
+  document.getElementById('heroAction').onclick=()=>{
+    if(m.status==='LIVE'){
+      if(m.cnptv) openNewTab(playerUrl(m));
+      else alert('This live stream is currently unavailable.');
+    }else{
+      document.getElementById('schedule').scrollIntoView({behavior:'smooth'});
+    }
+  };
   const dots=document.getElementById('heroDots');
   dots.innerHTML=heroes.slice(0,9).map((_,n)=>`<button class="hero-dot ${n===heroIndex?'active':''}" data-i="${n}"></button>`).join('');
   if(reset){clearInterval(heroTimer);heroTimer=setInterval(()=>setHero(heroIndex+1,false),6500)}
@@ -327,8 +334,32 @@ function attach(){
   document.getElementById('heroNext').onclick=()=>setHero(heroIndex+1);
   document.getElementById('heroDots').onclick=e=>{const b=e.target.closest('[data-i]');if(b)setHero(+b.dataset.i)};
   document.addEventListener('click',e=>{
-    const c=e.target.closest('.match-card');
-    if(c){const m=allMatches.find(x=>String(x.id)===c.dataset.id);if(m?.status==='LIVE'&&m.cnptv)openNewTab(playerUrl(m))}
+    /* ALL LIVE NOW cards + All Matches cards */
+    const c=e.target.closest('.card, .match-card');
+    if(c){
+      const m=allMatches.find(x=>String(x.id)===String(c.dataset.id));
+      if(m && m.status==='LIVE'){
+        if(m.cnptv){
+          openNewTab(playerUrl(m));
+        }else{
+          alert('This live stream is currently unavailable.');
+        }
+      }else if(m && m.status==='UPCOMING'){
+        document.getElementById('schedule').scrollIntoView({behavior:'smooth'});
+      }
+      return;
+    }
+
+    /* Explicit WATCH NOW buttons in All Matches */
+    const btn=e.target.closest('[data-watch="1"]');
+    if(btn){
+      const cardEl=btn.closest('.match-card');
+      const m=cardEl && allMatches.find(x=>String(x.id)===String(cardEl.dataset.id));
+      if(m){
+        if(m.cnptv) openNewTab(playerUrl(m));
+        else alert('This live stream is currently unavailable.');
+      }
+    }
   });
   document.getElementById('searchInput').oninput=e=>{
     const q=e.target.value.trim().toLowerCase();
